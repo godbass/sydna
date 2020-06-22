@@ -67,7 +67,7 @@ let getWebhook = (req, res) => {
 };
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+/* function handleMessage(sender_psid, received_message) {
     let response;
 
     // Check if the message contains text
@@ -111,7 +111,7 @@ function handleMessage(sender_psid, received_message) {
 
     // Sends the response message
     callSendAPI(sender_psid, response);
-}
+} */
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
@@ -139,7 +139,6 @@ function callSendAPI(sender_psid, response) {
         },
         "message": response
     };
-
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v6.0/me/messages",
@@ -154,6 +153,20 @@ function callSendAPI(sender_psid, response) {
             console.error("Unable to send message:" + err);
         }
     });
+}
+
+function firstTrait(nlp, name) {
+    return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
+}
+
+function handleMessage(sender_psid, message) {
+    // check greeting is here and is confident
+    const greeting = firstTrait(message.nlp, 'wit$greetings');
+    if (greeting && greeting.confidence > 0.8) {
+        callSendAPI(sender_psid,'Hi there!');
+    } else {
+        callSendAPI(sender_psid,'default');
+    }
 }
 module.exports = {
     postWebhook: postWebhook,
