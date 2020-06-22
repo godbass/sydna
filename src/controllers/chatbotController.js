@@ -160,7 +160,15 @@ function firstEntity(nlp, name) {
 }
 
 function handleMessage(sender_psid, message) {
-    // check greeting is here and is confident
+    // handle message for react, like press like button
+    // id loke button: sticker_id ...
+
+    if( message && message.attachments && message.attachments[0].playload){
+        callSendAPI(sender_psid, "Thanks a lot");
+        callSendAPIWithTemplate(sender_psid);
+        return;
+    }
+
     let entitiesArr = [ "greetings", "thanks", "bye" ];
     let entityChosen = "";
     entitiesArr.forEach((name) => {
@@ -184,10 +192,60 @@ function handleMessage(sender_psid, message) {
         }
         if(entityChosen === "bye"){
             //send bye message
-            callSendAPI(sender_psid,'Hi there!');
+            callSendAPI(sender_psid,'Bye-bye!');
         }
     }
 }
+
+let callSendAPIWithTemplate = (sender_psid) => {
+    // document fb message template
+    // https...
+    let body = {
+        "recipient":{
+            "id": sender_psid
+        },
+        "message":{
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"generic",
+                        "elements":[
+                        {
+                            "title":"Test",
+                            "image_url":"https://petersfancybrownhats.com/company_image.png",
+                            "subtitle":"It's just a test.",
+                            "buttons":[
+                                {
+                                    "type":"web_url",
+                                    "url":"https://petersfancybrownhats.com",
+                                    "title":"View Website"
+                                },{
+                                    "type":"postback",
+                                    "title":"Start Chatting",
+                                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    };
+
+    request({
+        "uri": "https://graph.facebook.com/v2.6/me/messages",
+        "qs": { "acces_token": process.env.FB_PAGE_TOKEN},
+        "method": "POST",
+        "json": body
+    },(err, res, body) => {
+        if (!err) {
+            //console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
+};
+
 module.exports = {
     postWebhook: postWebhook,
     getWebhook: getWebhook
