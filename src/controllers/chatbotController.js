@@ -165,6 +165,7 @@ function handleMessage(sender_psid, message) {
     if (greeting && greeting.confidence > 0.8) {
         callSendAPI(sender_psid,'Hi there!');
     } else {
+        //default logic
         callSendAPI(sender_psid,'default');
     }
 }
