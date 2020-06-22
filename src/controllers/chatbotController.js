@@ -163,7 +163,7 @@ function handleMessage(sender_psid, message) {
     // handle message for react, like press like button
     // id loke button: sticker_id ...
 
-    if( message && message.attachments && message.attachments[0].playload){
+    if( message && message.attachments && message.attachments[0].payload){
         callSendAPI(sender_psid, "Thanks a lot");
         callSendAPIWithTemplate(sender_psid);
         return;
