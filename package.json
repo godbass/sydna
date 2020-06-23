@@ -26,5 +26,13 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "nodemon": "^2.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godbass/sydna.git"
+  },
+  "bugs": {
+    "url": "https://github.com/godbass/sydna/issues"
+  },
+  "homepage": "https://github.com/godbass/sydna#readme"
 }
