@@ -1,8 +1,8 @@
 require("dotenv").config();
 import request from "request";
+const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 
 let postWebhook = (req, res) => {
-    // Parse the request body from the POST
     let body = req.body;
 
     // Check the webhook event is from a Page subscription
@@ -15,7 +15,6 @@ let postWebhook = (req, res) => {
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
 
-
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
             console.log('Sender PSID: ' + sender_psid);
@@ -27,13 +26,10 @@ let postWebhook = (req, res) => {
             } else if (webhook_event.postback) {
                 handlePostback(sender_psid, webhook_event.postback);
             }
-
-
-            });
+        });
 
         // Return a '200 OK' response to all events
         res.status(200).send('EVENT_RECEIVED');
-
     } else {
         // Return a '404 Not Found' if event is not from a page subscription
         res.sendStatus(404);
@@ -42,7 +38,7 @@ let postWebhook = (req, res) => {
 
 let getWebhook = (req, res) => {
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = process.env.MY_VERIFY_FB_TOKEN;
+    let VERIFY_TOKEN = MY_VERIFY_TOKEN;
 
     // Parse the query params
     let mode = req.query['hub.mode'];
