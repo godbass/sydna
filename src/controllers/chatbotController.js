@@ -124,7 +124,7 @@ let handlePostback = async (sender_psid, received_postback) => {
             let username = await chatBotService.getFacebookUsername(sender_psid);
             await chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
 
-            // response = { "text": `Welcome ${username} to SYDNA community`};
+            response = { "text": `Welcome ${username} to SYDNA community`};
             break;
         case "no":
             response = { "text": "hey hey no"};
