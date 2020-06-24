@@ -1,8 +1,10 @@
 require("dotenv").config();
 import request from "request";
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 let postWebhook = (req, res) => {
+    // Parse the request body from the POST
     let body = req.body;
 
     // Check the webhook event is from a Page subscription
@@ -14,6 +16,7 @@ let postWebhook = (req, res) => {
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
+
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
@@ -109,6 +112,7 @@ let getWebhook = (req, res) => {
     callSendAPI(sender_psid, response);
 } */
 
+
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
     let response;
@@ -121,6 +125,8 @@ function handlePostback(sender_psid, received_postback) {
         response = { "text": "Thanks!" }
     } else if (payload === 'no') {
         response = { "text": "Oops, try sending another image." }
+    }else if (payload === 'GET_STARTED') {
+        response = { "text": "hi! Welcome to SYDNA community!" }
     }
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
@@ -135,10 +141,12 @@ function callSendAPI(sender_psid, response) {
         },
         "message": { "text": response }
     };
+
+
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v6.0/me/messages",
-        "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
