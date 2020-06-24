@@ -23,19 +23,15 @@ let setUpUserFacebookProfile = (req, res) => {
                 "composer_input_disabled": false,
                 "call_to_actions": [
                     {
-                        "type": "postback",
-                        "title": "Talk to an agent",
-                        "payload": "CARE_HELP"
-                    },
-                    {
-                        "type": "postback",
-                        "title": "Outfit suggestions",
-                        "payload": "CURATION"
+                        "type": "web_url",
+                        "title": "View Ytb Chnl",
+                        "url": "https://www.youtube.com/channel/UCHqJxLo7mKam9GKqqwr2wfA",
+                        "webview_height_ratio": "full"
                     },
                     {
                         "type": "web_url",
-                        "title": "Shop now",
-                        "url": "https://www.originalcoastclothing.com/",
+                        "title": "view website",
+                        "url": "https://sydna.herokuapp.com/",
                         "webview_height_ratio": "full"
                     }
                 ]
