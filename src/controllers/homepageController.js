@@ -14,8 +14,8 @@ let getFacebookUserProfile = (req, res) => {
 let setUpUserFacebookProfile = (req, res) => {
     // Send the HTTP request to the Messenger Platform
     let data = {
-        "get_started":{
-            "payload":"FACEBOOK_WELCOME"
+        /*"get_started":{
+            "payload":"GET_STARTED"
         },
         "persistent_menu": [
             {
@@ -39,7 +39,7 @@ let setUpUserFacebookProfile = (req, res) => {
         ],
         "whitelisted_domains":[
             "https://sydna.herokuapp.com/"
-        ]
+        ]*/
     };
 
     request({

@@ -118,8 +118,9 @@ let handlePostback = async (sender_psid, received_postback) => {
     // Get the payload for the postback
     let payload = received_postback.payload;
     // Set the response based on the postback payload
-    switch (payload) {
-        case "FACEBOOK_WELCOME":
+    switch (payload['__button_text__']) {
+        case "Get Started":
+            console.log("marchéééééé")
             //get username
             let username = await chatBotService.getFacebookUsername(sender_psid);
             await chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
