@@ -57,6 +57,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
         }catch (e) {
             reject(e);
         }
+
     });
 }
 

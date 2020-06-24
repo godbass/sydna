@@ -66,7 +66,7 @@ let getWebhook = (req, res) => {
 };
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+/*function handleMessage(sender_psid, received_message) {
     let response;
 
     // Check if the message contains text
@@ -110,7 +110,7 @@ function handleMessage(sender_psid, received_message) {
 
     // Sends the response message
     callSendAPI(sender_psid, response);
-}
+}*/
 
 // Handles messaging_postbacks events
 let handlePostback = async (sender_psid, received_postback) => {
@@ -258,5 +258,5 @@ let callSendAPIWithTemplate = (sender_psid) => {
 
 module.exports = {
     postWebhook: postWebhook,
-    getWebhook: getWebhook
+    getWebhook: getWebhook,
 };
