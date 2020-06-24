@@ -169,7 +169,7 @@ function firstEntity(nlp, name) {
     return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 };
 
-/*function handleMessage(sender_psid, message) {
+function handleMessage(sender_psid, message) {
     // handle message for react, like press like button
     // id loke button: sticker_id ...
 
@@ -205,7 +205,7 @@ function firstEntity(nlp, name) {
             callSendAPI(sender_psid,'Bye-bye!');
         }
     }
-}*/
+}
 
 let callSendAPIWithTemplate = (sender_psid) => {
     // document fb message template
