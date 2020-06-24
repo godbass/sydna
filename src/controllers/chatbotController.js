@@ -3,7 +3,6 @@ import request from "request";
 import chatBotService from "../services/chatBotService";
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-
 let postWebhook = (req, res) => {
     // Parse the request body from the POST
     let body = req.body;
@@ -124,19 +123,21 @@ let handlePostback = async (sender_psid, received_postback) => {
         case "GET_STARTED":
             //get username
             let username = await chatBotService.getFacebookUsername(sender_psid);
-            response = { "text": `Welcome ${username} to SYDNA community`};
+            await chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
+
+            // response = { "text": `Welcome ${username} to SYDNA community`};
             break;
         case "no":
-            response = {};
+            response = { "text": "hey hey no"};
             break;
         case "yes":
-            response = {};
+            response = { "text": "hoo hoo"};
             break;
         default:
             console.log("Something wrong with switch case payload")
     }
     // Send the message to acknowledge the postback
-    callSendAPI(sender_psid, response);
+    // callSendAPI(sender_psid, response);
 };
 
 // Sends response messages via the Send API
@@ -159,7 +160,6 @@ function callSendAPI(sender_psid, response) {
     }, (err, res, body) => {
         if (!err) {
             console.log('message sent!')
-            console.log(`My message: ${response}`)
         } else {
             console.error("Unable to send message:" + err);
         }
