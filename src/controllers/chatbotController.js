@@ -118,7 +118,7 @@ let handlePostback = async (sender_psid, received_postback) => {
     // Get the payload for the postback
     let payload = received_postback.payload;
     // Set the response based on the postback payload
-    console.log("heyhey");
+    console.log(payload['__button_text__']);
     switch (payload['__button_text__']) {
         case "Get Started":
             console.log("marchéééééé")
