@@ -1,5 +1,6 @@
 require("dotenv").config();
 import request from "request";
+import chatBotService from "../services/chatBotService";
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
@@ -66,7 +67,7 @@ let getWebhook = (req, res) => {
 };
 
 // Handles messages events
-/* function handleMessage(sender_psid, received_message) {
+function handleMessage(sender_psid, received_message) {
     let response;
 
     // Check if the message contains text
@@ -110,18 +111,20 @@ let getWebhook = (req, res) => {
 
     // Sends the response message
     callSendAPI(sender_psid, response);
-} */
+}
 
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+let handlePostback = async (sender_psid, received_postback) => {
     let response;
     // Get the payload for the postback
     let payload = received_postback.payload;
     // Set the response based on the postback payload
     switch (payload) {
         case "GET_STARTED":
-            response = { "text": "Welcome to SYDNA community"};
+            //get username
+            let username = await chatBotService.getFacebookUsername(sender_psid);
+            response = { "text": `Welcome ${username} to SYDNA community`};
             break;
         case "no":
             response = {};
@@ -134,7 +137,7 @@ function handlePostback(sender_psid, received_postback) {
     }
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
-}
+};
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
@@ -165,7 +168,7 @@ function callSendAPI(sender_psid, response) {
 
 function firstEntity(nlp, name) {
     return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
-}
+};
 
 function handleMessage(sender_psid, message) {
     // handle message for react, like press like button
